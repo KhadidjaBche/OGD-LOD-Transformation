@@ -1,0 +1,45 @@
+# example of mapping model file
+
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ex: <http://data.example.org/> .
+
+@prefix ja:     <http://jena.hpl.hp.com/2005/11/Assembler#> .
+@prefix tdb:    <http://jena.hpl.hp.com/2008/tdb#> .
+@prefix sdb:    <http://jena.hpl.hp.com/2007/sdb#> .
+@prefix xl: <http://purl.org/NET/xlwrap#> .
+@prefix :       <http://myApplication/configuration#> .
+
+
+# mapping specification
+{ [] a xl:Mapping ;
+xl:offline "true"^^xsd:boolean ;
+
+xl:template [
+xl:fileName "file:/home/khadidja/eclipse-workspace/testTomCatServer/OGD_To_LOD/nlpTriples.xls" ;
+#xl:fileName "../home/khadidja/eclipse-workspace/testTomCatServer/OGD_To_LOD/nlpTriples.xls" ;
+xl:sheetName "nlp triples" ;
+xl:templateGraph :nlpTemplate ;
+xl:transform [
+a rdf:Seq ;
+rdf:_1 [
+a xl:RowShift ;
+xl:restriction "A2:G2" ;
+xl:breakCondition "ALLEMPTY(A2:G2)" ;
+xl:steps "1" ;
+]
+]
+] .
+}
+
+
+:nlpTemplate {
+[ xl:uri "'http://data.example.org/' & B2"^^xl:Expr] a "URI(('http://www.w3.org/1999/02/22-rdf-syntax-ns#'))"^^xl:Expr ;
+rdf:subject "B2"^^xl:Expr;
+rdf:predicate "C2"^^xl:Expr;
+rdf:object "D2"^^xl:Expr;
+rdfs:seeAlso "DBP_YEAR(E2)"^^xl:Expr ;
+
+}
